@@ -6,18 +6,18 @@ export interface DayConfig {
 
 // All 12 days - games will be added via PRs as each day arrives
 export const DAYS_CONFIG: DayConfig[] = [
-  { day: 1, title: "Day 1", unlockDate: "2025-12-04" },
-  { day: 2, title: "Day 2", unlockDate: "2025-12-05" },
-  { day: 3, title: "Day 3", unlockDate: "2025-12-06" },
-  { day: 4, title: "Day 4", unlockDate: "2025-12-07" },
-  { day: 5, title: "Day 5", unlockDate: "2025-12-08" },
-  { day: 6, title: "Day 6", unlockDate: "2025-12-09" },
-  { day: 7, title: "Day 7", unlockDate: "2025-12-10" },
-  { day: 8, title: "Day 8", unlockDate: "2025-12-11" },
-  { day: 9, title: "Day 9", unlockDate: "2025-12-12" },
-  { day: 10, title: "Day 10", unlockDate: "2025-12-13" },
-  { day: 11, title: "Day 11", unlockDate: "2025-12-14" },
-  { day: 12, title: "Day 12", unlockDate: "2025-12-15" },
+  { day: 1, title: "Benchmarks", unlockDate: "2025-12-04" },
+  { day: 2, title: "You're Wrong", unlockDate: "2025-12-05" },
+  { day: 3, title: "Whack-a-Merge", unlockDate: "2025-12-06" },
+  { day: 4, title: "Prompts", unlockDate: "2025-12-07" },
+  { day: 5, title: "Vibing", unlockDate: "2025-12-08" },
+  { day: 6, title: "Context", unlockDate: "2025-12-09" },
+  { day: 7, title: "Talent", unlockDate: "2025-12-10" },
+  { day: 8, title: "Tech Debtad", unlockDate: "2025-12-11" },
+  { day: 9, title: "Memory", unlockDate: "2025-12-12" },
+  { day: 10, title: "Typing", unlockDate: "2025-12-13" },
+  { day: 11, title: "Cost", unlockDate: "2025-12-14" },
+  { day: 12, title: "Let's Cook", unlockDate: "2025-12-15" },
 ];
 
 export function isDayUnlocked(day: number): boolean {

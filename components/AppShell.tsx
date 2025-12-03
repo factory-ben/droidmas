@@ -4,6 +4,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { DAYS_CONFIG, isDayUnlocked } from '@/lib/days-config';
 
+const DROIDMAS_ASCII = `██████╗ ██████╗  ██████╗ ██╗██████╗ ███╗   ███╗ █████╗ ███████╗
+██╔══██╗██╔══██╗██╔═══██╗██║██╔══██╗████╗ ████║██╔══██╗██╔════╝
+██║  ██║██████╔╝██║   ██║██║██║  ██║██╔████╔██║███████║███████╗
+██║  ██║██╔══██╗██║   ██║██║██║  ██║██║╚██╔╝██║██╔══██║╚════██║
+██████╔╝██║  ██║╚██████╔╝██║██████╔╝██║ ╚═╝ ██║██║  ██║███████║
+╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝`;
+
 type AppShellProps = {
   children: React.ReactNode;
 };
@@ -72,11 +79,13 @@ export default function AppShell({ children }: AppShellProps) {
       <div className="flex h-full w-full bg-surface/60 backdrop-blur">
         {/* Sidebar */}
         <aside className="w-72 border-r border-border-dim bg-surface/80 flex flex-col">
-          <div className="px-4 py-4">
+          <div className="px-3 py-4">
             <Link href="/" className="block">
-              <div className="text-lg font-bold text-factory-orange tracking-wide">DROIDMAS</div>
+              <pre className="text-[3.5px] leading-[4px] text-factory-orange font-mono whitespace-pre overflow-hidden">
+{DROIDMAS_ASCII}
+              </pre>
             </Link>
-            <div className="text-[11px] uppercase tracking-[0.08em] text-text-muted mt-2">
+            <div className="text-[11px] uppercase tracking-[0.08em] text-text-muted mt-3">
               12 Days of Experiments
             </div>
           </div>
