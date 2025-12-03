@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { DAYS_CONFIG, isDayUnlocked } from '@/lib/days-config';
+import Snowfall from './Snowfall';
 
 const DROIDMAS_ASCII = `██████╗ ██████╗  ██████╗ ██╗██████╗ ███╗   ███╗ █████╗ ███████╗
 ██╔══██╗██╔══██╗██╔═══██╗██║██╔══██╗████╗ ████║██╔══██╗██╔════╝
@@ -76,6 +77,7 @@ export default function AppShell({ children }: AppShellProps) {
 
   return (
     <div className="h-screen bg-background text-foreground antialiased overflow-hidden">
+      <Snowfall />
       <div className="flex h-full w-full bg-surface/60 backdrop-blur">
         {/* Sidebar */}
         <aside className="w-72 border-r border-border-dim bg-surface/80 flex flex-col">
