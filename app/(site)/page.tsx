@@ -22,7 +22,7 @@ export default function Home() {
         </div>
 
         <p className="text-text-muted text-sm">
-          Twelve days. Twelve experiments. One page experiences.
+          12 days. 12 experiments.
         </p>
 
         {unlockedDays.length > 0 ? (
