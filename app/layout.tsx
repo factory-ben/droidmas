@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   title: "DROIDMAS",
   description: "12 days. 1 droid.",
   metadataBase: new URL('https://droidmas.com'),
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     title: 'DROIDMAS',
     description: '12 days. 1 droid.',
