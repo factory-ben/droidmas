@@ -37,7 +37,7 @@ function DayLink({
             Day {formatDay(day)}
           </div>
           <div className="text-sm font-medium text-foreground">
-            {isUnlocked ? title : '???'}
+            {title}
           </div>
         </div>
         <div
