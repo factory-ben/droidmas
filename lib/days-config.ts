@@ -13,7 +13,7 @@ export const DAYS_CONFIG: DayConfig[] = [
   { day: 5, title: "Vibing", unlockDate: "2025-12-08" },
   { day: 6, title: "Context", unlockDate: "2025-12-09" },
   { day: 7, title: "Talent", unlockDate: "2025-12-10" },
-  { day: 8, title: "Tech Debtad", unlockDate: "2025-12-11" },
+  { day: 8, title: "Tech Debt", unlockDate: "2025-12-11" },
   { day: 9, title: "Memory", unlockDate: "2025-12-12" },
   { day: 10, title: "Typing", unlockDate: "2025-12-13" },
   { day: 11, title: "Cost", unlockDate: "2025-12-14" },

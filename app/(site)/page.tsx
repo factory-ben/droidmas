@@ -1,8 +1,8 @@
 'use client';
 
 import { DAYS_CONFIG, isDayUnlocked } from '@/lib/days-config';
+import { DROIDMAS_ASCII } from '@/lib/ascii-logo';
 import { PixelButton } from '@/components/PixelButton';
-import { PixelLogoLarge } from '@/components/PixelLogo';
 
 export default function Home() {
   const unlockedDays = DAYS_CONFIG.filter(d => isDayUnlocked(d.day));
@@ -13,7 +13,12 @@ export default function Home() {
       <div className="text-center space-y-8 max-w-2xl">
         <div className="relative flex justify-center">
           <div className="absolute -inset-8 bg-orange-500 opacity-15 blur-3xl" />
-          <PixelLogoLarge className="relative" />
+          <pre 
+            className="relative text-[8px] sm:text-[10px] md:text-[12px] leading-tight text-factory-orange whitespace-pre"
+            style={{ fontFamily: 'Menlo, Monaco, "Courier New", monospace' }}
+          >
+            {DROIDMAS_ASCII}
+          </pre>
         </div>
 
         <p className="text-text-muted text-sm">
@@ -31,9 +36,6 @@ export default function Home() {
           </div>
         ) : (
           <div className="space-y-6">
-            <p className="text-text-secondary">
-              First door opens {nextDay?.unlockDate || 'soon'}
-            </p>
             <PixelButton disabled>
               🔒 COMING SOON
             </PixelButton>
