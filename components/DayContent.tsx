@@ -1,0 +1,50 @@
+'use client';
+
+import { getDayConfig, isDayUnlocked } from '@/lib/days-config';
+import Link from 'next/link';
+
+export default function DayContent({ day }: { day: number }) {
+  const config = getDayConfig(day);
+  const unlocked = isDayUnlocked(day);
+
+  if (!config) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <h1 className="text-2xl font-bold text-text-muted">Day not found</h1>
+          <Link href="/" className="text-factory-orange hover:underline">
+            ← Back home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (!unlocked) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="text-6xl mb-4">🔒</div>
+          <h1 className="text-2xl font-bold text-text-muted">Day {day} is locked</h1>
+          <p className="text-text-muted">
+            Unlocks on {config.unlockDate}
+          </p>
+          <Link href="/" className="text-factory-orange hover:underline block mt-4">
+            ← Back home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // Placeholder for when day is unlocked but game not yet added
+  return (
+    <div className="h-full flex items-center justify-center">
+      <div className="text-center space-y-4">
+        <h1 className="text-3xl font-bold text-factory-orange">Day {day}</h1>
+        <h2 className="text-xl text-foreground">{config.title}</h2>
+        <p className="text-text-muted">Game coming soon...</p>
+      </div>
+    </div>
+  );
+}
