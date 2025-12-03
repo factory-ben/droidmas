@@ -2,13 +2,7 @@
 
 import { DAYS_CONFIG, isDayUnlocked } from '@/lib/days-config';
 import { PixelButton } from '@/components/PixelButton';
-
-const DROIDMAS_ASCII = `██████╗ ██████╗  ██████╗ ██╗██████╗ ███╗   ███╗ █████╗ ███████╗
-██╔══██╗██╔══██╗██╔═══██╗██║██╔══██╗████╗ ████║██╔══██╗██╔════╝
-██║  ██║██████╔╝██║   ██║██║██║  ██║██╔████╔██║███████║███████╗
-██║  ██║██╔══██╗██║   ██║██║██║  ██║██║╚██╔╝██║██╔══██║╚════██║
-██████╔╝██║  ██║╚██████╔╝██║██████╔╝██║ ╚═╝ ██║██║  ██║███████║
-╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝`;
+import { PixelLogoLarge } from '@/components/PixelLogo';
 
 export default function Home() {
   const unlockedDays = DAYS_CONFIG.filter(d => isDayUnlocked(d.day));
@@ -17,11 +11,9 @@ export default function Home() {
   return (
     <div className="h-full flex flex-col items-center justify-center p-6">
       <div className="text-center space-y-8 max-w-2xl">
-        <div className="relative">
-          <div className="absolute -inset-8 bg-orange-500 opacity-10 blur-3xl" />
-          <pre className="relative text-[6px] sm:text-[8px] md:text-[10px] leading-tight text-factory-orange font-mono whitespace-pre">
-{DROIDMAS_ASCII}
-          </pre>
+        <div className="relative flex justify-center">
+          <div className="absolute -inset-8 bg-orange-500 opacity-15 blur-3xl" />
+          <PixelLogoLarge className="relative" />
         </div>
 
         <p className="text-text-muted text-sm">

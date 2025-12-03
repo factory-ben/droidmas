@@ -4,13 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { DAYS_CONFIG, isDayUnlocked } from '@/lib/days-config';
 import Snowfall from './Snowfall';
-
-const DROIDMAS_ASCII = `██████╗ ██████╗  ██████╗ ██╗██████╗ ███╗   ███╗ █████╗ ███████╗
-██╔══██╗██╔══██╗██╔═══██╗██║██╔══██╗████╗ ████║██╔══██╗██╔════╝
-██║  ██║██████╔╝██║   ██║██║██║  ██║██╔████╔██║███████║███████╗
-██║  ██║██╔══██╗██║   ██║██║██║  ██║██║╚██╔╝██║██╔══██║╚════██║
-██████╔╝██║  ██║╚██████╔╝██║██████╔╝██║ ╚═╝ ██║██║  ██║███████║
-╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝`;
+import { PixelLogoSmall } from './PixelLogo';
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -81,16 +75,8 @@ export default function AppShell({ children }: AppShellProps) {
         {/* Sidebar */}
         <aside className="w-72 border-r border-border-dim bg-surface/80 flex flex-col">
           <div className="px-3 py-4">
-            <Link href="/" className="block overflow-hidden">
-              <pre 
-                className="text-factory-orange font-mono whitespace-pre leading-none"
-                style={{ 
-                  fontSize: '4.2px',
-                  lineHeight: '5px',
-                }}
-              >
-{DROIDMAS_ASCII}
-              </pre>
+            <Link href="/" className="block">
+              <PixelLogoSmall />
             </Link>
             <div className="text-[11px] uppercase tracking-[0.08em] text-text-muted mt-3">
               12 Days of Experiments
