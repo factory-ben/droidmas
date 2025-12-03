@@ -65,7 +65,7 @@ export default function Snowfall() {
   }, [mounted])
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 select-none">
+    <div className="pointer-events-none absolute inset-0 z-10 select-none">
       {isEnabled && mounted && (
         <div className="absolute inset-0 overflow-hidden">
           {snowflakes.map((flake) => (
@@ -74,7 +74,7 @@ export default function Snowfall() {
         </div>
       )}
 
-      <div className="pointer-events-auto fixed right-4 top-4 z-50">
+      <div className="pointer-events-auto absolute right-4 top-4 z-20">
         <button
           type="button"
           onClick={() => setIsEnabled((prev) => !prev)}

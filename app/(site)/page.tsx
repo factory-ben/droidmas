@@ -1,7 +1,14 @@
 'use client';
 
 import { DAYS_CONFIG, isDayUnlocked } from '@/lib/days-config';
-import Link from 'next/link';
+import { PixelButton } from '@/components/PixelButton';
+
+const DROIDMAS_ASCII = `██████╗ ██████╗  ██████╗ ██╗██████╗ ███╗   ███╗ █████╗ ███████╗
+██╔══██╗██╔══██╗██╔═══██╗██║██╔══██╗████╗ ████║██╔══██╗██╔════╝
+██║  ██║██████╔╝██║   ██║██║██║  ██║██╔████╔██║███████║███████╗
+██║  ██║██╔══██╗██║   ██║██║██║  ██║██║╚██╔╝██║██╔══██║╚════██║
+██████╔╝██║  ██║╚██████╔╝██║██████╔╝██║ ╚═╝ ██║██║  ██║███████║
+╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝`;
 
 export default function Home() {
   const unlockedDays = DAYS_CONFIG.filter(d => isDayUnlocked(d.day));
@@ -9,34 +16,38 @@ export default function Home() {
 
   return (
     <div className="h-full flex flex-col items-center justify-center p-6">
-      <div className="text-center space-y-8 max-w-lg">
-        <div>
-          <h1 className="text-4xl font-bold text-factory-orange mb-2">DROIDMAS</h1>
-          <p className="text-text-muted">
-            Twelve days. Twelve experiments. One page experiences.
-          </p>
+      <div className="text-center space-y-8 max-w-2xl">
+        <div className="relative">
+          <div className="absolute -inset-8 bg-orange-500 opacity-10 blur-3xl" />
+          <pre className="relative text-[6px] sm:text-[8px] md:text-[10px] leading-tight text-factory-orange font-mono whitespace-pre">
+{DROIDMAS_ASCII}
+          </pre>
         </div>
 
+        <p className="text-text-muted text-sm">
+          Twelve days. Twelve experiments. One page experiences.
+        </p>
+
         {unlockedDays.length > 0 ? (
-          <div className="space-y-4">
+          <div className="space-y-6">
             <p className="text-text-secondary">
               {unlockedDays.length} day{unlockedDays.length !== 1 ? 's' : ''} unlocked
             </p>
-            <Link
-              href={`/day/${unlockedDays[unlockedDays.length - 1].day}`}
-              className="inline-block px-6 py-3 bg-factory-orange text-background font-medium rounded-lg hover:bg-factory-light transition-colors"
-            >
-              Play Latest →
-            </Link>
+            <PixelButton href={`/day/${unlockedDays[unlockedDays.length - 1].day}`}>
+              ▶ PLAY LATEST
+            </PixelButton>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-6">
             <p className="text-text-secondary">
               First door opens {nextDay?.unlockDate || 'soon'}
             </p>
-            <div className="px-6 py-3 border border-border-dim text-text-muted rounded-lg">
-              Coming Soon
-            </div>
+            <PixelButton disabled>
+              🔒 COMING SOON
+            </PixelButton>
+            <p className="text-zinc-600 text-xs font-mono">
+              December 4th, 2025
+            </p>
           </div>
         )}
       </div>

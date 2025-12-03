@@ -77,13 +77,18 @@ export default function AppShell({ children }: AppShellProps) {
 
   return (
     <div className="h-screen bg-background text-foreground antialiased overflow-hidden">
-      <Snowfall />
       <div className="flex h-full w-full bg-surface/60 backdrop-blur">
         {/* Sidebar */}
         <aside className="w-72 border-r border-border-dim bg-surface/80 flex flex-col">
           <div className="px-3 py-4">
-            <Link href="/" className="block">
-              <pre className="text-[3.5px] leading-[4px] text-factory-orange font-mono whitespace-pre overflow-hidden">
+            <Link href="/" className="block overflow-hidden">
+              <pre 
+                className="text-factory-orange font-mono whitespace-pre leading-none"
+                style={{ 
+                  fontSize: '4.2px',
+                  lineHeight: '5px',
+                }}
+              >
 {DROIDMAS_ASCII}
               </pre>
             </Link>
@@ -106,9 +111,10 @@ export default function AppShell({ children }: AppShellProps) {
         </aside>
 
         {/* Main Content */}
-        <div className="flex h-full flex-1 flex-col">
+        <div className="flex h-full flex-1 flex-col relative">
+          <Snowfall />
           <main className="flex-1 overflow-hidden bg-gradient-to-b from-surface/30 via-background to-background">
-            <div className="h-full w-full">{children}</div>
+            <div className="h-full w-full relative z-0">{children}</div>
           </main>
         </div>
       </div>
