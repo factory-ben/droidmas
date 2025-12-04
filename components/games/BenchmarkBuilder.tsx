@@ -567,7 +567,7 @@ function BenchmarkBuilderInner() {
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 md:left-72 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 p-4">
+        <div className="fixed bottom-0 left-0 right-0 md:left-56 z-40 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 p-4">
           <div className="max-w-5xl mx-auto flex justify-between items-center">
             <div>
               <span className="text-zinc-400">Selected: </span>
@@ -632,7 +632,7 @@ function BenchmarkBuilderInner() {
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 md:left-72 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 p-4">
+        <div className="fixed bottom-0 left-0 right-0 md:left-56 z-40 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 p-4">
           <div className="max-w-4xl mx-auto flex justify-between items-center">
             <div>
               <span className="text-zinc-400">Selected: </span>
@@ -695,7 +695,7 @@ function BenchmarkBuilderInner() {
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 md:left-72 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 p-4">
+        <div className="fixed bottom-0 left-0 right-0 md:left-56 z-40 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 p-4">
           <div className="max-w-4xl mx-auto flex justify-between items-center">
             <div>
               <span className="text-zinc-400">Modifiers: </span>
