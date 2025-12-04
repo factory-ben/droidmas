@@ -30,7 +30,29 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Extract prompt from @droid mention
+        id: extract_prompt
+        run: |
+          if [ "${{ github.event_name }}" == "issue_comment" ]; then
+            BODY="${{ github.event.comment.body }}"
+          elif [ "${{ github.event_name }}" == "pull_request_review_comment" ]; then
+            BODY="${{ github.event.comment.body }}"
+          elif [ "${{ github.event_name }}" == "pull_request_review" ]; then
+            BODY="${{ github.event.review.body }}"
+          elif [ "${{ github.event_name }}" == "issues" ]; then
+            BODY="${{ github.event.issue.body }}"
+          fi
+          
+          # Extract everything after @droid
+          PROMPT=$(echo "$BODY" | sed -n 's/.*@droid[[:space:]]*//p')
+          
+          # Handle multiline output
+          echo "prompt<<EOF" >> $GITHUB_OUTPUT
+          echo "$PROMPT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Run Droid Exec
         uses: Factory-AI/droid-action@v1
         with:
           factory_api_key: ${{ secrets.FACTORY_API_KEY }}
+          prompt: ${{ steps.extract_prompt.outputs.prompt }}
