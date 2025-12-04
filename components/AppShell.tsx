@@ -153,7 +153,7 @@ export default function AppShell({ children }: AppShellProps) {
 
         {/* Main Content */}
         <div className="flex h-full flex-1 flex-col relative">
-          <Snowfall />
+          {pathname === '/' && <Snowfall />}
           <main className="flex-1 overflow-hidden bg-gradient-to-b from-surface/30 via-background to-background">
             <div className="h-full w-full relative z-0">{children}</div>
           </main>
