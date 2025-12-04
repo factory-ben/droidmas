@@ -2,6 +2,11 @@
 
 import { getDayConfig, isDayUnlocked } from '@/lib/days-config';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const BenchmarkBuilder = dynamic(() => import('@/components/games/BenchmarkBuilder'), {
+  loading: () => <div className="h-full flex items-center justify-center"><div className="text-xl">Loading...</div></div>
+});
 
 export default function DayContent({ day }: { day: number }) {
   const config = getDayConfig(day);
@@ -35,6 +40,11 @@ export default function DayContent({ day }: { day: number }) {
         </div>
       </div>
     );
+  }
+
+  // Day 1: Benchmark Builder
+  if (day === 1) {
+    return <BenchmarkBuilder />;
   }
 
   // Placeholder for when day is unlocked but game not yet added
