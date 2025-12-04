@@ -572,7 +572,10 @@ function BenchmarkBuilderInner() {
             </div>
           </div>
 
-          <div className="sticky bottom-0 z-40 shrink-0 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)]">
+          <div 
+            className="sticky z-40 shrink-0 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4"
+            style={{ bottom: 'env(safe-area-inset-bottom)', paddingBottom: 'calc(env(safe-area-inset-bottom) + 1rem)' }}
+          >
             <div className="max-w-5xl mx-auto flex justify-between items-center">
               <div>
                 <span className="text-zinc-400">Selected: </span>
@@ -641,7 +644,10 @@ function BenchmarkBuilderInner() {
             </div>
           </div>
 
-          <div className="sticky bottom-0 z-40 shrink-0 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)]">
+          <div 
+            className="sticky z-40 shrink-0 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4"
+            style={{ bottom: 'env(safe-area-inset-bottom)', paddingBottom: 'calc(env(safe-area-inset-bottom) + 1rem)' }}
+          >
             <div className="max-w-4xl mx-auto flex justify-between items-center">
               <div>
                 <span className="text-zinc-400">Selected: </span>
@@ -708,7 +714,10 @@ function BenchmarkBuilderInner() {
             </div>
           </div>
 
-          <div className="sticky bottom-0 z-40 shrink-0 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)]">
+          <div 
+            className="sticky z-40 shrink-0 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4"
+            style={{ bottom: 'env(safe-area-inset-bottom)', paddingBottom: 'calc(env(safe-area-inset-bottom) + 1rem)' }}
+          >
             <div className="max-w-4xl mx-auto flex justify-between items-center">
               <div>
                 <span className="text-zinc-400">Modifiers: </span>
