@@ -152,7 +152,7 @@ function getScore(
   selectedModifiers: string[]
 ): number {
   const model = models.find(m => m.id === modelId)
-  const seed = `${modelId}-${criterionId}-${allCriteria.sort().join(',')}-${allModels.sort().join(',')}`
+  const seed = `${modelId}-${criterionId}-${[...allCriteria].sort().join(',')}-${[...allModels].sort().join(',')}`
   const hash = hashCode(seed)
   let baseScore = 65 + (hash % 34)
   
