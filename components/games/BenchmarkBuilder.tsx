@@ -471,123 +471,129 @@ function BenchmarkBuilderInner() {
   // Phase 1: Criteria Selection
   if (phase === 'criteria') {
     return (
-      <div className="h-full overflow-y-auto bg-black text-white">
-        <ClippyHelper day={1} speechText="Make your own benchmark. Add different combos or add your own." />
-        <div className="max-w-5xl mx-auto p-6 pb-32">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold mb-2">Build Your Own AI Benchmark</h1>
-            <p className="text-zinc-400">Select the criteria that actually matter</p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            {showAddForm ? (
-              <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-700">
-                <div className="flex flex-col gap-3 mb-3">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const emojis = ['🎯', '🚀', '💡', '⚡', '🔥', '✨', '🎨', '🧪', '🔮', '💎', '🌟', '🎪']
-                      const currentIndex = emojis.indexOf(newCriterionEmoji)
-                      setNewCriterionEmoji(emojis[(currentIndex + 1) % emojis.length])
-                    }}
-                    className="w-10 h-10 bg-zinc-800 border border-zinc-600 rounded-lg text-xl flex items-center justify-center hover:bg-zinc-700 hover:border-zinc-500 transition-all shrink-0"
-                    title="Click to change emoji"
-                  >
-                    {newCriterionEmoji}
-                  </button>
-                  <input
-                    type="text"
-                    value={newCriterionName}
-                    onChange={(e) => setNewCriterionName(e.target.value)}
-                    className="w-full p-3 bg-zinc-800 border border-zinc-600 rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all"
-                    placeholder="What should AI be judged on?"
-                    onKeyDown={(e) => e.key === 'Enter' && addCustomCriterion()}
-                    autoFocus
-                  />
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={addCustomCriterion}
-                    disabled={!newCriterionName.trim()}
-                    className="flex-1 py-2.5 bg-green-600 hover:bg-green-500 disabled:bg-zinc-700 disabled:text-zinc-500 rounded-lg text-sm font-medium transition-all"
-                  >
-                    Add Category
-                  </button>
-                  <button
-                    onClick={() => setShowAddForm(false)}
-                    className="px-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 rounded-lg text-sm transition-all"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <button
-                onClick={() => setShowAddForm(true)}
-                className="p-4 rounded-xl text-left transition-all border border-dashed border-zinc-700 bg-zinc-900/50 hover:border-zinc-500 hover:bg-zinc-800"
-              >
-                <span className="text-2xl mb-2 block">➕</span>
-                <span className="text-sm font-medium leading-tight block text-zinc-400">Add Custom Category</span>
-              </button>
-            )}
-            {customCriteria.map(criterion => {
-              const selected = selectedCriteria.includes(criterion.id)
-              return (
-                <button
-                  key={criterion.id}
-                  onClick={() => toggleCriterion(criterion.id)}
-                  className={`p-4 rounded-xl text-left transition-all border border-zinc-800 ${
-                    selected
-                      ? 'bg-green-900/50 ring-2 ring-green-500 scale-[1.02]'
-                      : 'bg-zinc-900 hover:border-zinc-600 hover:bg-zinc-800'
-                  }`}
-                >
-                  <span className="text-2xl mb-2 block">{criterion.emoji}</span>
-                  <span className="text-sm font-medium leading-tight block">{criterion.name}</span>
-                </button>
-              )
-            })}
-            {criteria.map(criterion => {
-              const selected = selectedCriteria.includes(criterion.id)
-              return (
-                <button
-                  key={criterion.id}
-                  onClick={() => toggleCriterion(criterion.id)}
-                  className={`p-4 rounded-xl text-left transition-all border border-zinc-800 ${
-                    selected
-                      ? 'bg-green-900/50 ring-2 ring-green-500 scale-[1.02]'
-                      : 'bg-zinc-900 hover:border-zinc-600 hover:bg-zinc-800'
-                  }`}
-                >
-                  <span className="text-2xl mb-2 block">{criterion.emoji}</span>
-                  <span className="text-sm font-medium leading-tight block">{criterion.name}</span>
-                </button>
-              )
-            })}
-          </div>
+      <div className="h-full bg-black text-white">
+        <div className="hidden sm:block">
+          <ClippyHelper day={1} speechText="Make your own benchmark. Add different combos or add your own." />
         </div>
+        <div className="flex h-full flex-col">
+          <div className="flex-1 overflow-y-auto">
+            <div className="max-w-5xl mx-auto p-6 pb-40">
+              <div className="text-center mb-8">
+                <h1 className="text-4xl font-bold mb-2">Build Your Own AI Benchmark</h1>
+                <p className="text-zinc-400">Select the criteria that actually matter</p>
+              </div>
 
-        <div className="fixed bottom-0 left-0 right-0 md:left-56 z-40 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)]">
-          <div className="max-w-5xl mx-auto flex justify-between items-center">
-            <div>
-              <span className="text-zinc-400">Selected: </span>
-              <span className="font-bold text-green-400">{selectedCriteria.length}</span>
-              <span className="text-zinc-600"> criteria</span>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                {showAddForm ? (
+                  <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-700">
+                    <div className="flex flex-col gap-3 mb-3">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const emojis = ['🎯', '🚀', '💡', '⚡', '🔥', '✨', '🎨', '🧪', '🔮', '💎', '🌟', '🎪']
+                          const currentIndex = emojis.indexOf(newCriterionEmoji)
+                          setNewCriterionEmoji(emojis[(currentIndex + 1) % emojis.length])
+                        }}
+                        className="w-10 h-10 bg-zinc-800 border border-zinc-600 rounded-lg text-xl flex items-center justify-center hover:bg-zinc-700 hover:border-zinc-500 transition-all shrink-0"
+                        title="Click to change emoji"
+                      >
+                        {newCriterionEmoji}
+                      </button>
+                      <input
+                        type="text"
+                        value={newCriterionName}
+                        onChange={(e) => setNewCriterionName(e.target.value)}
+                        className="w-full p-3 bg-zinc-800 border border-zinc-600 rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all"
+                        placeholder="What should AI be judged on?"
+                        onKeyDown={(e) => e.key === 'Enter' && addCustomCriterion()}
+                        autoFocus
+                      />
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={addCustomCriterion}
+                        disabled={!newCriterionName.trim()}
+                        className="flex-1 py-2.5 bg-green-600 hover:bg-green-500 disabled:bg-zinc-700 disabled:text-zinc-500 rounded-lg text-sm font-medium transition-all"
+                      >
+                        Add Category
+                      </button>
+                      <button
+                        onClick={() => setShowAddForm(false)}
+                        className="px-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 rounded-lg text-sm transition-all"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setShowAddForm(true)}
+                    className="p-4 rounded-xl text-left transition-all border border-dashed border-zinc-700 bg-zinc-900/50 hover:border-zinc-500 hover:bg-zinc-800"
+                  >
+                    <span className="text-2xl mb-2 block">➕</span>
+                    <span className="text-sm font-medium leading-tight block text-zinc-400">Add Custom Category</span>
+                  </button>
+                )}
+                {customCriteria.map(criterion => {
+                  const selected = selectedCriteria.includes(criterion.id)
+                  return (
+                    <button
+                      key={criterion.id}
+                      onClick={() => toggleCriterion(criterion.id)}
+                      className={`p-4 rounded-xl text-left transition-all border border-zinc-800 ${
+                        selected
+                          ? 'bg-green-900/50 ring-2 ring-green-500 scale-[1.02]'
+                          : 'bg-zinc-900 hover:border-zinc-600 hover:bg-zinc-800'
+                      }`}
+                    >
+                      <span className="text-2xl mb-2 block">{criterion.emoji}</span>
+                      <span className="text-sm font-medium leading-tight block">{criterion.name}</span>
+                    </button>
+                  )
+                })}
+                {criteria.map(criterion => {
+                  const selected = selectedCriteria.includes(criterion.id)
+                  return (
+                    <button
+                      key={criterion.id}
+                      onClick={() => toggleCriterion(criterion.id)}
+                      className={`p-4 rounded-xl text-left transition-all border border-zinc-800 ${
+                        selected
+                          ? 'bg-green-900/50 ring-2 ring-green-500 scale-[1.02]'
+                          : 'bg-zinc-900 hover:border-zinc-600 hover:bg-zinc-800'
+                      }`}
+                    >
+                      <span className="text-2xl mb-2 block">{criterion.emoji}</span>
+                      <span className="text-sm font-medium leading-tight block">{criterion.name}</span>
+                    </button>
+                  )
+                })}
+              </div>
             </div>
-            <button
-              onClick={() => {
-                setPhase('models')
-                generateBenchmarkName(selectedCriteria)
-              }}
-              disabled={selectedCriteria.length < 2}
-              className={`px-6 py-3 rounded-lg font-bold transition-all ${
-                selectedCriteria.length >= 2
-                  ? 'bg-green-600 hover:bg-green-500'
-                  : 'bg-zinc-800 text-zinc-600 cursor-not-allowed'
-              }`}
-            >
-              {selectedCriteria.length < 2 ? 'Select at least 2' : 'Choose Models →'}
-            </button>
+          </div>
+
+          <div className="sticky bottom-0 z-40 shrink-0 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)]">
+            <div className="max-w-5xl mx-auto flex justify-between items-center">
+              <div>
+                <span className="text-zinc-400">Selected: </span>
+                <span className="font-bold text-green-400">{selectedCriteria.length}</span>
+                <span className="text-zinc-600"> criteria</span>
+              </div>
+              <button
+                onClick={() => {
+                  setPhase('models')
+                  generateBenchmarkName(selectedCriteria)
+                }}
+                disabled={selectedCriteria.length < 2}
+                className={`px-6 py-3 rounded-lg font-bold transition-all ${
+                  selectedCriteria.length >= 2
+                    ? 'bg-green-600 hover:bg-green-500'
+                    : 'bg-zinc-800 text-zinc-600 cursor-not-allowed'
+                }`}
+              >
+                {selectedCriteria.length < 2 ? 'Select at least 2' : 'Choose Models →'}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -597,59 +603,63 @@ function BenchmarkBuilderInner() {
   // Phase 2: Model Selection
   if (phase === 'models') {
     return (
-      <div className="h-full overflow-y-auto bg-black text-white">
-        <div className="max-w-4xl mx-auto p-6 pb-32">
-          <div className="text-center mb-8">
-            <button onClick={() => setPhase('criteria')} className="text-zinc-500 hover:text-white mb-4 inline-block">
-              ← Back to criteria
-            </button>
-            <h1 className="text-4xl font-bold mb-2">Select Models to Benchmark</h1>
-            <p className="text-zinc-400">Pick the frontier models to evaluate</p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {models.map(model => {
-              const selected = selectedModels.includes(model.id)
-              return (
-                <button
-                  key={model.id}
-                  onClick={() => toggleModel(model.id)}
-                  className={`p-4 rounded-xl text-left transition-all border border-zinc-800 ${
-                    selected
-                      ? 'bg-blue-900/50 ring-2 ring-blue-500 scale-[1.02]'
-                      : 'bg-zinc-900 hover:border-zinc-600 hover:bg-zinc-800'
-                  }`}
-                >
-                  <div 
-                    className="w-3 h-3 rounded-full mb-2"
-                    style={{ backgroundColor: model.color }}
-                  />
-                  <span className="font-bold block">{model.name}</span>
-                  <span className="text-zinc-500 text-sm">{model.org}</span>
+      <div className="h-full bg-black text-white">
+        <div className="flex h-full flex-col">
+          <div className="flex-1 overflow-y-auto">
+            <div className="max-w-4xl mx-auto p-6 pb-40">
+              <div className="text-center mb-8">
+                <button onClick={() => setPhase('criteria')} className="text-zinc-500 hover:text-white mb-4 inline-block">
+                  ← Back to criteria
                 </button>
-              )
-            })}
-          </div>
-        </div>
+                <h1 className="text-4xl font-bold mb-2">Select Models to Benchmark</h1>
+                <p className="text-zinc-400">Pick the frontier models to evaluate</p>
+              </div>
 
-        <div className="fixed bottom-0 left-0 right-0 md:left-56 z-40 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)]">
-          <div className="max-w-4xl mx-auto flex justify-between items-center">
-            <div>
-              <span className="text-zinc-400">Selected: </span>
-              <span className="font-bold text-blue-400">{selectedModels.length}</span>
-              <span className="text-zinc-600"> models</span>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {models.map(model => {
+                  const selected = selectedModels.includes(model.id)
+                  return (
+                    <button
+                      key={model.id}
+                      onClick={() => toggleModel(model.id)}
+                      className={`p-4 rounded-xl text-left transition-all border border-zinc-800 ${
+                        selected
+                          ? 'bg-blue-900/50 ring-2 ring-blue-500 scale-[1.02]'
+                          : 'bg-zinc-900 hover:border-zinc-600 hover:bg-zinc-800'
+                      }`}
+                    >
+                      <div 
+                        className="w-3 h-3 rounded-full mb-2"
+                        style={{ backgroundColor: model.color }}
+                      />
+                      <span className="font-bold block">{model.name}</span>
+                      <span className="text-zinc-500 text-sm">{model.org}</span>
+                    </button>
+                  )
+                })}
+              </div>
             </div>
-            <button
-              onClick={() => setPhase('modifiers')}
-              disabled={selectedModels.length < 2}
-              className={`px-6 py-3 rounded-lg font-bold transition-all ${
-                selectedModels.length >= 2
-                  ? 'bg-blue-600 hover:bg-blue-500'
-                  : 'bg-zinc-800 text-zinc-600 cursor-not-allowed'
-              }`}
-            >
-              {selectedModels.length < 2 ? 'Select at least 2' : 'Evaluation Settings →'}
-            </button>
+          </div>
+
+          <div className="sticky bottom-0 z-40 shrink-0 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)]">
+            <div className="max-w-4xl mx-auto flex justify-between items-center">
+              <div>
+                <span className="text-zinc-400">Selected: </span>
+                <span className="font-bold text-blue-400">{selectedModels.length}</span>
+                <span className="text-zinc-600"> models</span>
+              </div>
+              <button
+                onClick={() => setPhase('modifiers')}
+                disabled={selectedModels.length < 2}
+                className={`px-6 py-3 rounded-lg font-bold transition-all ${
+                  selectedModels.length >= 2
+                    ? 'bg-blue-600 hover:bg-blue-500'
+                    : 'bg-zinc-800 text-zinc-600 cursor-not-allowed'
+                }`}
+              >
+                {selectedModels.length < 2 ? 'Select at least 2' : 'Evaluation Settings →'}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -659,55 +669,59 @@ function BenchmarkBuilderInner() {
   // Phase 3: Modifiers (Gaming the benchmark)
   if (phase === 'modifiers') {
     return (
-      <div className="h-full overflow-y-auto bg-black text-white">
-        <div className="max-w-4xl mx-auto p-6 pb-32">
-          <div className="text-center mb-8">
-            <button onClick={() => setPhase('models')} className="text-zinc-500 hover:text-white mb-4 inline-block">
-              ← Back to models
-            </button>
-            <h1 className="text-4xl font-bold mb-2">Evaluation Settings</h1>
-            <p className="text-zinc-400">Optional: Fine-tune your methodology (just like real benchmarks!)</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {modifiers.map(mod => {
-              const selected = selectedModifiers.includes(mod.id)
-              return (
-                <button
-                  key={mod.id}
-                  onClick={() => toggleModifier(mod.id)}
-                  className={`p-4 rounded-xl text-left transition-all border border-zinc-800 ${
-                    selected
-                      ? 'bg-purple-900/50 ring-2 ring-purple-500 scale-[1.02]'
-                      : 'bg-zinc-900 hover:border-zinc-600 hover:bg-zinc-800'
-                  }`}
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">{mod.emoji}</span>
-                    <div>
-                      <span className="font-bold block">{mod.name}</span>
-                      <span className="text-zinc-500 text-sm">{mod.description}</span>
-                    </div>
-                  </div>
+      <div className="h-full bg-black text-white">
+        <div className="flex h-full flex-col">
+          <div className="flex-1 overflow-y-auto">
+            <div className="max-w-4xl mx-auto p-6 pb-40">
+              <div className="text-center mb-8">
+                <button onClick={() => setPhase('models')} className="text-zinc-500 hover:text-white mb-4 inline-block">
+                  ← Back to models
                 </button>
-              )
-            })}
-          </div>
-        </div>
+                <h1 className="text-4xl font-bold mb-2">Evaluation Settings</h1>
+                <p className="text-zinc-400">Optional: Fine-tune your methodology (just like real benchmarks!)</p>
+              </div>
 
-        <div className="fixed bottom-0 left-0 right-0 md:left-56 z-40 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)]">
-          <div className="max-w-4xl mx-auto flex justify-between items-center">
-            <div>
-              <span className="text-zinc-400">Modifiers: </span>
-              <span className="font-bold text-purple-400">{selectedModifiers.length}</span>
-              <span className="text-zinc-600"> selected</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {modifiers.map(mod => {
+                  const selected = selectedModifiers.includes(mod.id)
+                  return (
+                    <button
+                      key={mod.id}
+                      onClick={() => toggleModifier(mod.id)}
+                      className={`p-4 rounded-xl text-left transition-all border border-zinc-800 ${
+                        selected
+                          ? 'bg-purple-900/50 ring-2 ring-purple-500 scale-[1.02]'
+                          : 'bg-zinc-900 hover:border-zinc-600 hover:bg-zinc-800'
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <span className="text-2xl">{mod.emoji}</span>
+                        <div>
+                          <span className="font-bold block">{mod.name}</span>
+                          <span className="text-zinc-500 text-sm">{mod.description}</span>
+                        </div>
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
             </div>
-            <button
-              onClick={runBenchmark}
-              className="px-6 py-3 rounded-lg font-bold transition-all bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-500 hover:to-blue-500"
-            >
-              🚀 Run Benchmark
-            </button>
+          </div>
+
+          <div className="sticky bottom-0 z-40 shrink-0 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)]">
+            <div className="max-w-4xl mx-auto flex justify-between items-center">
+              <div>
+                <span className="text-zinc-400">Modifiers: </span>
+                <span className="font-bold text-purple-400">{selectedModifiers.length}</span>
+                <span className="text-zinc-600"> selected</span>
+              </div>
+              <button
+                onClick={runBenchmark}
+                className="px-6 py-3 rounded-lg font-bold transition-all bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-500 hover:to-blue-500"
+              >
+                🚀 Run Benchmark
+              </button>
+            </div>
           </div>
         </div>
       </div>
