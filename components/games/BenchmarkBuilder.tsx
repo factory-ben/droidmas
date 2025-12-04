@@ -472,7 +472,7 @@ function BenchmarkBuilderInner() {
   if (phase === 'criteria') {
     return (
       <div className="h-full overflow-y-auto bg-black text-white">
-        <ClippyHelper day={1} speechText="Every benchmark is biased. Now you get to choose the bias. Pick your criteria, pick your models, watch the chaos unfold." />
+        <ClippyHelper day={1} speechText="Make your own benchmark. Add different combos or add your own." />
         <div className="max-w-5xl mx-auto p-6 pb-32">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold mb-2">Build Your Own AI Benchmark</h1>

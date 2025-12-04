@@ -11,7 +11,7 @@ interface ClippyHelperProps {
 export function ClippyHelper({ day, speechText }: ClippyHelperProps) {
   const [isOpen, setIsOpen] = useState(true)
   const gradientColors = DAY_COLORS[day] || DAY_COLORS[1]
-  const avatarSrc = `https://api.dicebear.com/7.x/avataaars/svg?seed=${day}`
+  const avatarSrc = 'https://pbs.twimg.com/profile_images/1927385934024105985/dbNOM1In_400x400.png'
 
   // Auto-hide after 10 seconds
   useEffect(() => {
