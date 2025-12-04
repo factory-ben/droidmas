@@ -842,7 +842,7 @@ function BenchmarkBuilderInner() {
           </div>
 
           {/* Leaderboard */}
-          <div className="bg-zinc-900 rounded-xl border border-zinc-800 overflow-hidden mb-6">
+          <div className="bg-zinc-900 rounded-xl border border-zinc-800 overflow-hidden mb-6 max-w-2xl mx-auto">
             <div className="p-3 sm:p-4 border-b border-zinc-800">
               <h2 className="font-bold">Leaderboard</h2>
             </div>
@@ -874,7 +874,7 @@ function BenchmarkBuilderInner() {
           </div>
 
           {/* Detailed Scores Table */}
-          <div className="bg-zinc-900 rounded-xl border border-zinc-800 mb-6 overflow-hidden w-full">
+          <div className="bg-zinc-900 rounded-xl border border-zinc-800 mb-6 overflow-hidden w-full max-w-2xl mx-auto">
             <div className="p-3 sm:p-4 border-b border-zinc-800">
               <h2 className="font-bold">Scores by Criteria</h2>
             </div>
