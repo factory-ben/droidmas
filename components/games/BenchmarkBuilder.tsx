@@ -576,8 +576,8 @@ function BenchmarkBuilderInner() {
             className="sticky z-40 shrink-0 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4"
             style={{ bottom: 'env(safe-area-inset-bottom)', paddingBottom: 'calc(env(safe-area-inset-bottom) + 1rem)' }}
           >
-            <div className="max-w-5xl mx-auto flex justify-between items-center">
-              <div>
+            <div className="max-w-5xl mx-auto flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+              <div className="text-center sm:text-left">
                 <span className="text-zinc-400">Selected: </span>
                 <span className="font-bold text-green-400">{selectedCriteria.length}</span>
                 <span className="text-zinc-600"> criteria</span>
@@ -588,7 +588,7 @@ function BenchmarkBuilderInner() {
                   generateBenchmarkName(selectedCriteria)
                 }}
                 disabled={selectedCriteria.length < 2}
-                className={`px-6 py-3 rounded-lg font-bold transition-all ${
+                className={`px-6 py-3 rounded-lg font-bold transition-all w-full sm:w-auto ${
                   selectedCriteria.length >= 2
                     ? 'bg-green-600 hover:bg-green-500'
                     : 'bg-zinc-800 text-zinc-600 cursor-not-allowed'
@@ -648,8 +648,8 @@ function BenchmarkBuilderInner() {
             className="sticky z-40 shrink-0 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4"
             style={{ bottom: 'env(safe-area-inset-bottom)', paddingBottom: 'calc(env(safe-area-inset-bottom) + 1rem)' }}
           >
-            <div className="max-w-4xl mx-auto flex justify-between items-center">
-              <div>
+            <div className="max-w-4xl mx-auto flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+              <div className="text-center sm:text-left">
                 <span className="text-zinc-400">Selected: </span>
                 <span className="font-bold text-blue-400">{selectedModels.length}</span>
                 <span className="text-zinc-600"> models</span>
@@ -657,7 +657,7 @@ function BenchmarkBuilderInner() {
               <button
                 onClick={() => setPhase('modifiers')}
                 disabled={selectedModels.length < 2}
-                className={`px-6 py-3 rounded-lg font-bold transition-all ${
+                className={`px-6 py-3 rounded-lg font-bold transition-all w-full sm:w-auto ${
                   selectedModels.length >= 2
                     ? 'bg-blue-600 hover:bg-blue-500'
                     : 'bg-zinc-800 text-zinc-600 cursor-not-allowed'
@@ -718,15 +718,15 @@ function BenchmarkBuilderInner() {
             className="sticky z-40 shrink-0 bg-zinc-900/95 backdrop-blur border-t border-zinc-800 px-4 pt-4"
             style={{ bottom: 'env(safe-area-inset-bottom)', paddingBottom: 'calc(env(safe-area-inset-bottom) + 1rem)' }}
           >
-            <div className="max-w-4xl mx-auto flex justify-between items-center">
-              <div>
+            <div className="max-w-4xl mx-auto flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+              <div className="text-center sm:text-left">
                 <span className="text-zinc-400">Modifiers: </span>
                 <span className="font-bold text-purple-400">{selectedModifiers.length}</span>
                 <span className="text-zinc-600"> selected</span>
               </div>
               <button
                 onClick={runBenchmark}
-                className="px-6 py-3 rounded-lg font-bold transition-all bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-500 hover:to-blue-500"
+                className="px-6 py-3 rounded-lg font-bold transition-all w-full sm:w-auto bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-500 hover:to-blue-500"
               >
                 🚀 Run Benchmark
               </button>
@@ -781,14 +781,14 @@ function BenchmarkBuilderInner() {
   const winner = results[0]
 
   return (
-    <div className="h-full overflow-y-auto bg-black text-white p-6">
+    <div className="h-full overflow-y-auto overflow-x-hidden bg-black text-white px-3 py-4 sm:p-6">
       <ManipulationToast
         showManipulationToast={showManipulationToast}
         showArxivToast={showArxivToast}
       />
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto" style={{ maxWidth: 'calc(100vw - 1.5rem)' }}>
         {/* Saveable Results Card */}
-        <div ref={resultsRef} className="bg-black p-6 rounded-xl">
+        <div ref={resultsRef} className="bg-black rounded-xl w-full">
           <div className="text-center mb-8">
             <div 
               className="text-6xl mb-4 cursor-pointer select-none hover:scale-110 transition-transform"
@@ -843,13 +843,13 @@ function BenchmarkBuilderInner() {
 
           {/* Leaderboard */}
           <div className="bg-zinc-900 rounded-xl border border-zinc-800 overflow-hidden mb-6">
-            <div className="p-4 border-b border-zinc-800">
+            <div className="p-3 sm:p-4 border-b border-zinc-800">
               <h2 className="font-bold">Leaderboard</h2>
             </div>
             <div className="divide-y divide-zinc-800">
               {results.map((result, index) => (
-                <div key={result.model.id} className="p-4 flex items-center gap-4">
-                  <div className={`text-2xl font-bold w-8 ${
+                <div key={result.model.id} className="p-3 sm:p-4 flex items-center gap-2 sm:gap-4">
+                  <div className={`text-xl sm:text-2xl font-bold w-6 sm:w-8 shrink-0 ${
                     index === 0 ? 'text-yellow-400' : 
                     index === 1 ? 'text-zinc-400' : 
                     index === 2 ? 'text-amber-600' : 'text-zinc-600'
@@ -857,16 +857,16 @@ function BenchmarkBuilderInner() {
                     {index + 1}
                   </div>
                   <div 
-                    className="w-3 h-3 rounded-full"
+                    className="w-3 h-3 rounded-full shrink-0"
                     style={{ backgroundColor: result.model.color }}
                   />
-                  <div className="flex-1">
-                    <span className="font-medium">{result.model.name}</span>
-                    <span className="text-zinc-500 text-sm ml-2">{result.model.org}</span>
+                  <div className="flex-1 min-w-0">
+                    <span className="font-medium text-sm sm:text-base block truncate">{result.model.name}</span>
+                    <span className="text-zinc-500 text-xs sm:text-sm">{result.model.org}</span>
                   </div>
-                  <div className="text-right">
-                    <span className="text-2xl font-mono font-bold">{result.avgScore.toFixed(1)}</span>
-                    <span className="text-zinc-500 text-sm ml-1">avg</span>
+                  <div className="text-right shrink-0">
+                    <span className="text-xl sm:text-2xl font-mono font-bold">{result.avgScore.toFixed(1)}</span>
+                    <span className="text-zinc-500 text-xs sm:text-sm ml-1">avg</span>
                   </div>
                 </div>
               ))}
@@ -874,17 +874,17 @@ function BenchmarkBuilderInner() {
           </div>
 
           {/* Detailed Scores Table */}
-          <div className="bg-zinc-900 rounded-xl border border-zinc-800 overflow-hidden mb-6">
-            <div className="p-4 border-b border-zinc-800">
+          <div className="bg-zinc-900 rounded-xl border border-zinc-800 mb-6 overflow-hidden w-full">
+            <div className="p-3 sm:p-4 border-b border-zinc-800">
               <h2 className="font-bold">Scores by Criteria</h2>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+            <div className="overflow-x-auto w-full">
+              <table className="text-sm min-w-full">
                 <thead>
                   <tr className="border-b border-zinc-800">
-                    <th className="p-3 text-left text-zinc-500">Criterion</th>
+                    <th className="p-2 sm:p-3 text-left text-zinc-500 text-xs sm:text-sm max-w-[120px] sm:max-w-[200px]">Criterion</th>
                     {results.map(r => (
-                      <th key={r.model.id} className="p-3 text-center text-zinc-500 min-w-[80px]">
+                      <th key={r.model.id} className="p-2 sm:p-3 text-center text-zinc-500 text-xs sm:text-sm whitespace-nowrap">
                         {r.model.name.split(' ')[0]}
                       </th>
                     ))}
@@ -907,15 +907,17 @@ function BenchmarkBuilderInner() {
                     
                     return (
                       <tr key={criterionId}>
-                        <td className="p-3">
-                          <span className="mr-2">{criterion.emoji}</span>
-                          <span className="text-xs md:text-sm">{criterion.name}</span>
+                        <td className="p-2 sm:p-3 max-w-[120px] sm:max-w-[200px]">
+                          <div className="flex items-start gap-1">
+                            <span className="shrink-0">{criterion.emoji}</span>
+                            <span className="text-xs line-clamp-2">{criterion.name}</span>
+                          </div>
                         </td>
                         {scores.map((score, idx) => {
                           const modelId = results[idx].model.id
                           const displayScore = displayScores[idx]
                           return (
-                            <td key={modelId} className="p-3 text-center">
+                            <td key={modelId} className="p-2 sm:p-3 text-center whitespace-nowrap">
                               {manipulationMode ? (
                                 <div className="flex flex-col items-center gap-1">
                                   <input

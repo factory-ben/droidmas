@@ -86,9 +86,9 @@ export default function AppShell({ children }: AppShellProps) {
   const closeSidebar = () => setSidebarOpen(false);
 
   return (
-    <div className="h-screen bg-background text-foreground antialiased overflow-hidden">
+    <div className="h-svh md:h-screen bg-background text-foreground antialiased overflow-hidden flex flex-col">
       {/* Mobile Header */}
-      <div className="md:hidden flex items-center justify-between px-4 py-3 border-b border-border-dim bg-surface/80">
+      <div className="md:hidden flex items-center justify-between px-4 py-3 border-b border-border-dim bg-surface/80 shrink-0">
         <Link href="/" className="text-factory-orange font-bold">
           DROIDMAS
         </Link>
@@ -101,7 +101,7 @@ export default function AppShell({ children }: AppShellProps) {
         </button>
       </div>
 
-      <div className="flex h-full md:h-screen w-full bg-surface/60 backdrop-blur">
+      <div className="flex flex-1 md:h-screen w-full bg-surface/60 backdrop-blur min-h-0">
         {/* Mobile Sidebar Overlay */}
         {sidebarOpen && (
           <div 
