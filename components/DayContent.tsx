@@ -9,7 +9,8 @@ const BenchmarkBuilder = dynamic(() => import('@/components/games/BenchmarkBuild
 });
 
 const InfiniteRightness = dynamic(() => import('@/components/games/InfiniteRightness'), {
-  loading: () => <div className="h-full flex items-center justify-center"><div className="text-xl">Loading...</div></div>
+  ssr: false,
+  loading: () => <div className="h-full bg-zinc-950 flex items-center justify-center"><div className="text-xl text-white">Loading...</div></div>
 });
 
 export default function DayContent({ day }: { day: number }) {
