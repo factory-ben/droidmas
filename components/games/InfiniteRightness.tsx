@@ -634,7 +634,7 @@ export default function InfiniteRightness() {
       onDragEnd={handleDragEnd}
       autoScroll={false}
     >
-      <div className="h-full bg-zinc-950 text-white flex">
+      <div className="h-full bg-zinc-950 text-white flex overflow-hidden">
         <ClippyHelper 
           day={2} 
           speechText="Combine rightness elements to create escalating levels of being correct. How right can you get?" 
@@ -711,7 +711,7 @@ export default function InfiniteRightness() {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <div
             ref={(el) => {
               canvasRef.current = el
@@ -786,10 +786,10 @@ export default function InfiniteRightness() {
           )}
           </div>
 
-          <div className="md:hidden border-t border-zinc-800/50 bg-zinc-900/80 shrink-0 w-full overflow-hidden">
+          <div className="md:hidden border-t border-zinc-800/50 bg-zinc-900/80 shrink-0 w-full max-w-full overflow-hidden">
             <div 
-              className="flex overflow-x-auto gap-2 p-3 w-full"
-              style={{ WebkitOverflowScrolling: 'touch' }}
+              className="flex overflow-x-auto gap-2 p-3"
+              style={{ WebkitOverflowScrolling: 'touch', maxWidth: '100%' }}
             >
               {filteredDiscovered.map(element => (
                 <button
@@ -804,7 +804,7 @@ export default function InfiniteRightness() {
             </div>
           </div>
 
-          <div className="py-2 min-[400px]:h-14 bg-zinc-900/95 border-t border-zinc-800/50 flex flex-col min-[400px]:flex-row items-center justify-center gap-2 min-[400px]:gap-4 shrink-0">
+          <div className="py-2 min-[400px]:h-14 bg-zinc-900/95 border-t border-zinc-800/50 flex flex-col min-[400px]:flex-row items-center justify-center gap-2 min-[400px]:gap-4 shrink-0 w-full max-w-full">
             <div className="px-4 min-[400px]:px-5 py-1.5 min-[400px]:py-2 bg-zinc-800/50 rounded-full border border-zinc-700/30 text-sm flex items-center gap-2 min-[400px]:gap-3">
               <span className="text-zinc-400 text-xs min-[400px]:text-sm">Discovered</span>
               <span className="font-bold text-emerald-400 text-base min-[400px]:text-lg">{discovered.length}</span>
