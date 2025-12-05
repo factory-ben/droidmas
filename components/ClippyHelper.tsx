@@ -6,12 +6,39 @@ import { DAY_COLORS } from './PixelStartScreen'
 interface ClippyHelperProps {
   day: number
   speechText: string
+  avatarSrc?: string
+  hideOnMobile?: boolean
 }
 
-export function ClippyHelper({ day, speechText }: ClippyHelperProps) {
+const DAY_AVATAR_COLORS = ['#f97316', '#22c55e', '#3b82f6', '#a855f7', '#f59e0b', '#ec4899', '#06b6d4', '#84cc16', '#8b5cf6', '#ef4444', '#0ea5e9', '#d946ef']
+const DAY_AVATAR_EMOJIS = ['🤖', '🎯', '🧠', '🚀', '🎮', '🎨', '🧪', '🛠️', '🕹️', '📈', '🧩', '⚡']
+const FALLBACK_AVATAR = 'https://pbs.twimg.com/profile_images/1927385934024105985/dbNOM1In_400x400.png'
+
+function getAvatarSrc(day: number, override?: string) {
+  if (override) return override
+
+  const color = DAY_AVATAR_COLORS[(day - 1 + DAY_AVATAR_COLORS.length) % DAY_AVATAR_COLORS.length]
+  const emoji = DAY_AVATAR_EMOJIS[(day - 1 + DAY_AVATAR_EMOJIS.length) % DAY_AVATAR_EMOJIS.length]
+  const label = `Day ${day}`
+
+  try {
+    const svg = `
+      <svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'>
+        <rect width='64' height='64' rx='10' fill='${color}' />
+        <text x='50%' y='52%' dominant-baseline='middle' text-anchor='middle' font-size='22'>${emoji}</text>
+        <text x='50%' y='84%' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='10' fill='white' opacity='0.9'>${label}</text>
+      </svg>
+    `
+    return `data:image/svg+xml,${encodeURIComponent(svg)}`
+  } catch {
+    return FALLBACK_AVATAR
+  }
+}
+
+export function ClippyHelper({ day, speechText, avatarSrc: avatarOverride, hideOnMobile }: ClippyHelperProps) {
   const [isOpen, setIsOpen] = useState(true)
   const gradientColors = DAY_COLORS[day] || DAY_COLORS[1]
-  const avatarSrc = 'https://pbs.twimg.com/profile_images/1927385934024105985/dbNOM1In_400x400.png'
+  const avatarSrc = getAvatarSrc(day, avatarOverride)
 
   // Auto-hide after 10 seconds
   useEffect(() => {
@@ -22,7 +49,7 @@ export function ClippyHelper({ day, speechText }: ClippyHelperProps) {
   }, [])
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2">
+    <div className={`fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2 ${hideOnMobile ? 'hidden md:flex' : ''}`}>
       {isOpen && (
         <div className="relative animate-in fade-in slide-in-from-bottom-2 duration-200">
           <div 

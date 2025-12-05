@@ -8,6 +8,10 @@ const BenchmarkBuilder = dynamic(() => import('@/components/games/BenchmarkBuild
   loading: () => <div className="h-full flex items-center justify-center"><div className="text-xl">Loading...</div></div>
 });
 
+const InfiniteRightness = dynamic(() => import('@/components/games/InfiniteRightness'), {
+  loading: () => <div className="h-full flex items-center justify-center"><div className="text-xl">Loading...</div></div>
+});
+
 export default function DayContent({ day }: { day: number }) {
   const config = getDayConfig(day);
   const unlocked = isDayUnlocked(day);
@@ -45,6 +49,11 @@ export default function DayContent({ day }: { day: number }) {
   // Day 1: Benchmark Builder
   if (day === 1) {
     return <BenchmarkBuilder />;
+  }
+
+  // Day 2: Infinite Rightness
+  if (day === 2) {
+    return <InfiniteRightness />;
   }
 
   // Placeholder for when day is unlocked but game not yet added

@@ -7,7 +7,7 @@ export interface DayConfig {
 // All 12 days - games will be added via PRs as each day arrives
 export const DAYS_CONFIG: DayConfig[] = [
   { day: 1, title: "Benchmarks", unlockDate: "2025-12-04" },
-  { day: 2, title: "You're Wrong", unlockDate: "2025-12-05" },
+  { day: 2, title: "You're Right", unlockDate: "2025-12-05" },
   { day: 3, title: "Whack-a-Merge", unlockDate: "2025-12-06" },
   { day: 4, title: "Prompts", unlockDate: "2025-12-07" },
   { day: 5, title: "Vibing", unlockDate: "2025-12-08" },
