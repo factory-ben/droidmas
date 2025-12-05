@@ -128,6 +128,26 @@ export default function InfiniteRightness() {
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // Reposition items when viewport resizes to keep them visible
+  useEffect(() => {
+    const handleResize = () => {
+      const canvas = canvasRef.current
+      if (!canvas) return
+      
+      const rect = canvas.getBoundingClientRect()
+      const maxY = rect.height - SAFE_BOTTOM_MARGIN
+      
+      setCanvasItems(prev => prev.map(item => ({
+        ...item,
+        x: Math.max(10, Math.min(rect.width - 100, item.x)),
+        y: Math.max(10, Math.min(maxY - 40, item.y)),
+      })))
+    }
+    
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
   
   useEffect(() => {
     let buffer = ''
@@ -766,16 +786,10 @@ export default function InfiniteRightness() {
           )}
           </div>
 
-          <div className="md:hidden border-t border-zinc-800/50 bg-zinc-900/80 shrink-0">
+          <div className="md:hidden border-t border-zinc-800/50 bg-zinc-900/80 shrink-0 w-full overflow-hidden">
             <div 
-              className="flex overflow-x-auto gap-2 p-3"
+              className="flex overflow-x-auto gap-2 p-3 w-full"
               style={{ WebkitOverflowScrolling: 'touch' }}
-              onWheel={(e) => {
-                if (e.deltaY !== 0) {
-                  e.currentTarget.scrollLeft += e.deltaY
-                  e.preventDefault()
-                }
-              }}
             >
               {filteredDiscovered.map(element => (
                 <button
@@ -790,20 +804,20 @@ export default function InfiniteRightness() {
             </div>
           </div>
 
-          <div className="h-14 bg-zinc-900/95 border-t border-zinc-800/50 flex items-center justify-center gap-4 shrink-0">
-            <div className="px-5 py-2 bg-zinc-800/50 rounded-full border border-zinc-700/30 text-sm flex items-center gap-3">
-              <span className="text-zinc-400">Discovered</span>
-              <span className="font-bold text-emerald-400 text-lg">{discovered.length}</span>
+          <div className="py-2 min-[400px]:h-14 bg-zinc-900/95 border-t border-zinc-800/50 flex flex-col min-[400px]:flex-row items-center justify-center gap-2 min-[400px]:gap-4 shrink-0">
+            <div className="px-4 min-[400px]:px-5 py-1.5 min-[400px]:py-2 bg-zinc-800/50 rounded-full border border-zinc-700/30 text-sm flex items-center gap-2 min-[400px]:gap-3">
+              <span className="text-zinc-400 text-xs min-[400px]:text-sm">Discovered</span>
+              <span className="font-bold text-emerald-400 text-base min-[400px]:text-lg">{discovered.length}</span>
               <span className="text-zinc-600">/</span>
-              <span className="text-zinc-400">{getAllDiscoverableCount()}</span>
+              <span className="text-zinc-400 text-xs min-[400px]:text-sm">{getAllDiscoverableCount()}</span>
             </div>
-            <div className="px-5 py-2 bg-zinc-800/50 rounded-full border border-zinc-700/30 text-sm flex items-center gap-3">
-              <span className="text-zinc-400">Tier</span>
-              <span className={`font-bold text-lg ${Math.max(...discovered.map(d => d.tier), 0) === 10 ? 'text-yellow-400' : 'text-amber-400'}`}>
+            <div className="px-4 min-[400px]:px-5 py-1.5 min-[400px]:py-2 bg-zinc-800/50 rounded-full border border-zinc-700/30 text-sm flex items-center gap-2 min-[400px]:gap-3">
+              <span className="text-zinc-400 text-xs min-[400px]:text-sm">Tier</span>
+              <span className={`font-bold text-base min-[400px]:text-lg ${Math.max(...discovered.map(d => d.tier), 0) === 10 ? 'text-yellow-400' : 'text-amber-400'}`}>
                 {Math.max(...discovered.map(d => d.tier), 0)}
               </span>
               <span className="text-zinc-600">/</span>
-              <span className="text-zinc-400">10</span>
+              <span className="text-zinc-400 text-xs min-[400px]:text-sm">10</span>
             </div>
           </div>
         </div>
