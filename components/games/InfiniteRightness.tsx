@@ -104,6 +104,7 @@ export default function InfiniteRightness() {
   const [discovered, setDiscovered] = useState<RightnessElement[]>(baseElements)
   const [canvasItems, setCanvasItems] = useState<CanvasItem[]>([])
   const [canvasDragState, setCanvasDragState] = useState<CanvasDragState | null>(null)
+  const [selectedItemId, setSelectedItemId] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [newDiscovery, setNewDiscovery] = useState<string | null>(null)
   const [mergeAnimation, setMergeAnimation] = useState<{ x: number; y: number } | null>(null)
@@ -287,6 +288,34 @@ export default function InfiniteRightness() {
     dropPositionRef.current = null
   }
 
+  const justCombinedRef = useRef(false)
+  
+  const handleItemClick = (item: CanvasItem) => {
+    // Ignore clicks briefly after combining to prevent accidental selection
+    if (justCombinedRef.current) {
+      return
+    }
+    
+    if (selectedItemId === null) {
+      // First click - select this item
+      setSelectedItemId(item.id)
+    } else if (selectedItemId === item.id) {
+      // Clicked same item - deselect
+      setSelectedItemId(null)
+    } else {
+      // Clicked different item - combine them
+      const selectedItem = canvasItems.find(i => i.id === selectedItemId)
+      if (selectedItem) {
+        justCombinedRef.current = true
+        combineItems(selectedItem, item)
+        setTimeout(() => {
+          justCombinedRef.current = false
+        }, 300)
+      }
+      setSelectedItemId(null)
+    }
+  }
+
   const handleMouseDown = (e: React.MouseEvent, item: CanvasItem) => {
     const element = itemRefs.current.get(item.id)
     if (!element) return
@@ -302,6 +331,22 @@ export default function InfiniteRightness() {
     })
   }
 
+  const handleTouchStart = (e: React.TouchEvent, item: CanvasItem) => {
+    const element = itemRefs.current.get(item.id)
+    if (!element || e.touches.length === 0) return
+
+    const touch = e.touches[0]
+    const rect = element.getBoundingClientRect()
+    dragStartPosRef.current = { x: item.x, y: item.y }
+    dragDeltaRef.current = { x: 0, y: 0 }
+    
+    setCanvasDragState({
+      id: item.id,
+      offsetX: touch.clientX - rect.left,
+      offsetY: touch.clientY - rect.top,
+    })
+  }
+
   const handleMouseMove = (e: MouseEvent) => {
     const { canvasDragState: ds } = stateRef.current
     if (!ds || !canvasRef.current) return
@@ -310,6 +355,32 @@ export default function InfiniteRightness() {
     const maxY = canvasRect.height - SAFE_BOTTOM_MARGIN
     const x = e.clientX - canvasRect.left - ds.offsetX
     const y = e.clientY - canvasRect.top - ds.offsetY
+    
+    const clampedX = Math.max(0, Math.min(canvasRect.width - 120, x))
+    const clampedY = Math.max(0, Math.min(maxY - 50, y))
+    
+    dragDeltaRef.current = {
+      x: clampedX - dragStartPosRef.current.x,
+      y: clampedY - dragStartPosRef.current.y,
+    }
+    
+    const element = itemRefs.current.get(ds.id)
+    if (element) {
+      element.style.transform = `translate(${dragDeltaRef.current.x}px, ${dragDeltaRef.current.y}px)`
+    }
+  }
+
+  const handleTouchMove = (e: TouchEvent) => {
+    const { canvasDragState: ds } = stateRef.current
+    if (!ds || !canvasRef.current || e.touches.length === 0) return
+
+    e.preventDefault() // Prevent scrolling while dragging
+    
+    const touch = e.touches[0]
+    const canvasRect = canvasRef.current.getBoundingClientRect()
+    const maxY = canvasRect.height - SAFE_BOTTOM_MARGIN
+    const x = touch.clientX - canvasRect.left - ds.offsetX
+    const y = touch.clientY - canvasRect.top - ds.offsetY
     
     const clampedX = Math.max(0, Math.min(canvasRect.width - 120, x))
     const clampedY = Math.max(0, Math.min(maxY - 50, y))
@@ -523,14 +594,19 @@ export default function InfiniteRightness() {
       
       const updatedDraggedItem = { ...draggedItem, x: finalX, y: finalY }
       
-      setCanvasItems(prev => prev.map(item => 
-        item.id === ds.id ? updatedDraggedItem : item
-      ))
+      // Only update position and check collision if there was actual movement
+      const hasMoved = Math.abs(dragDeltaRef.current.x) > 5 || Math.abs(dragDeltaRef.current.y) > 5
       
-      const collidingItem = checkCollision(updatedDraggedItem, items)
-      
-      if (collidingItem) {
-        combineItems(updatedDraggedItem, collidingItem)
+      if (hasMoved) {
+        setCanvasItems(prev => prev.map(item => 
+          item.id === ds.id ? updatedDraggedItem : item
+        ))
+        
+        const collidingItem = checkCollision(updatedDraggedItem, items)
+        
+        if (collidingItem) {
+          combineItems(updatedDraggedItem, collidingItem)
+        }
       }
     }
 
@@ -542,9 +618,13 @@ export default function InfiniteRightness() {
     if (canvasDragState) {
       window.addEventListener('mousemove', handleMouseMove)
       window.addEventListener('mouseup', handleMouseUp)
+      window.addEventListener('touchmove', handleTouchMove, { passive: false })
+      window.addEventListener('touchend', handleMouseUp)
       return () => {
         window.removeEventListener('mousemove', handleMouseMove)
         window.removeEventListener('mouseup', handleMouseUp)
+        window.removeEventListener('touchmove', handleTouchMove)
+        window.removeEventListener('touchend', handleMouseUp)
       }
     }
   }, [canvasDragState])
@@ -711,7 +791,7 @@ export default function InfiniteRightness() {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        <div className="flex-1 flex flex-col min-w-0 w-0 overflow-hidden">
           <div
             ref={(el) => {
               canvasRef.current = el
@@ -736,6 +816,7 @@ export default function InfiniteRightness() {
             const textStyle = getNodeTextStyle(item.name)
             const isWrapping = textStyle.includes('whitespace-normal')
             const isUltimate = item.tier === 10
+            const isSelected = selectedItemId === item.id
             
             return (
               <div
@@ -745,11 +826,15 @@ export default function InfiniteRightness() {
                   else itemRefs.current.delete(item.id)
                 }}
                 onMouseDown={e => handleMouseDown(e, item)}
-                className={`absolute rounded-xl border backdrop-blur-sm cursor-grab active:cursor-grabbing select-none transition-colors ${getTierColor(item.tier)} ${
+                onTouchStart={e => handleTouchStart(e, item)}
+                onClick={() => handleItemClick(item)}
+                className={`absolute rounded-xl border backdrop-blur-sm cursor-grab active:cursor-grabbing select-none transition-all ${getTierColor(item.tier)} ${
                   isUltimate ? 'px-6 py-4 text-black font-bold z-40' : `px-3.5 ${textStyle}`
                 } ${
                   canvasDragState?.id === item.id ? 'shadow-xl shadow-white/25 z-50' : 'hover:shadow-lg hover:shadow-white/10'
-                } ${isWrapping && !isUltimate ? 'flex flex-col items-center justify-center' : ''}`}
+                } ${isWrapping && !isUltimate ? 'flex flex-col items-center justify-center' : ''} ${
+                  isSelected ? 'ring-2 ring-emerald-400 shadow-lg shadow-emerald-500/30 scale-105' : ''
+                }`}
                 style={{
                   left: item.x,
                   top: item.y,
@@ -786,10 +871,10 @@ export default function InfiniteRightness() {
           )}
           </div>
 
-          <div className="md:hidden border-t border-zinc-800/50 bg-zinc-900/80 shrink-0 w-full max-w-full overflow-hidden">
+          <div className="md:hidden border-t border-zinc-800/50 bg-zinc-900/80 shrink-0 overflow-hidden flex">
             <div 
-              className="flex overflow-x-auto gap-2 p-3"
-              style={{ WebkitOverflowScrolling: 'touch', maxWidth: '100%' }}
+              className="flex-1 flex overflow-x-scroll gap-2 p-3 pr-2"
+              style={{ WebkitOverflowScrolling: 'touch' }}
             >
               {filteredDiscovered.map(element => (
                 <button
@@ -802,22 +887,38 @@ export default function InfiniteRightness() {
                 </button>
               ))}
             </div>
+            <div className="flex items-center gap-2 p-3 border-l border-zinc-800/50">
+              <button
+                onClick={clearCanvas}
+                className="p-2.5 bg-zinc-800/50 hover:bg-zinc-700/70 rounded-lg text-zinc-300 transition-all active:scale-95"
+                aria-label="Clear Canvas"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+              <button
+                onClick={resetAll}
+                className="p-2.5 bg-rose-950/30 hover:bg-rose-900/50 border border-rose-900/30 rounded-lg text-rose-300/70 transition-all active:scale-95"
+                aria-label="Reset Progress"
+              >
+                <RotateCcw className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
-          <div className="py-2 min-[400px]:h-14 bg-zinc-900/95 border-t border-zinc-800/50 flex flex-col min-[400px]:flex-row items-center justify-center gap-2 min-[400px]:gap-4 shrink-0 w-full max-w-full">
-            <div className="px-4 min-[400px]:px-5 py-1.5 min-[400px]:py-2 bg-zinc-800/50 rounded-full border border-zinc-700/30 text-sm flex items-center gap-2 min-[400px]:gap-3">
-              <span className="text-zinc-400 text-xs min-[400px]:text-sm">Discovered</span>
-              <span className="font-bold text-emerald-400 text-base min-[400px]:text-lg">{discovered.length}</span>
+          <div className="px-3 py-2 sm:h-14 bg-zinc-900/95 border-t border-zinc-800/50 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 shrink-0">
+            <div className="w-full sm:w-auto px-4 sm:px-5 py-1.5 sm:py-2 bg-zinc-800/50 rounded-full border border-zinc-700/30 text-sm flex items-center justify-center gap-2 sm:gap-3">
+              <span className="text-zinc-400 text-xs sm:text-sm">Discovered</span>
+              <span className="font-bold text-emerald-400 text-base sm:text-lg">{discovered.length}</span>
               <span className="text-zinc-600">/</span>
-              <span className="text-zinc-400 text-xs min-[400px]:text-sm">{getAllDiscoverableCount()}</span>
+              <span className="text-zinc-400 text-xs sm:text-sm">{getAllDiscoverableCount()}</span>
             </div>
-            <div className="px-4 min-[400px]:px-5 py-1.5 min-[400px]:py-2 bg-zinc-800/50 rounded-full border border-zinc-700/30 text-sm flex items-center gap-2 min-[400px]:gap-3">
-              <span className="text-zinc-400 text-xs min-[400px]:text-sm">Tier</span>
-              <span className={`font-bold text-base min-[400px]:text-lg ${Math.max(...discovered.map(d => d.tier), 0) === 10 ? 'text-yellow-400' : 'text-amber-400'}`}>
+            <div className="w-full sm:w-auto px-4 sm:px-5 py-1.5 sm:py-2 bg-zinc-800/50 rounded-full border border-zinc-700/30 text-sm flex items-center justify-center gap-2 sm:gap-3">
+              <span className="text-zinc-400 text-xs sm:text-sm">Tier</span>
+              <span className={`font-bold text-base sm:text-lg ${Math.max(...discovered.map(d => d.tier), 0) === 10 ? 'text-yellow-400' : 'text-amber-400'}`}>
                 {Math.max(...discovered.map(d => d.tier), 0)}
               </span>
               <span className="text-zinc-600">/</span>
-              <span className="text-zinc-400 text-xs min-[400px]:text-sm">10</span>
+              <span className="text-zinc-400 text-xs sm:text-sm">10</span>
             </div>
           </div>
         </div>
