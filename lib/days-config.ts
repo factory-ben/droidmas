@@ -25,7 +25,8 @@ export function isDayUnlocked(day: number): boolean {
   if (!config) return false;
   
   const now = new Date();
-  const unlockDate = new Date(config.unlockDate + 'T00:00:00');
+  // Unlock at midnight Pacific Time (PST = UTC-8)
+  const unlockDate = new Date(config.unlockDate + 'T00:00:00-08:00');
   return now >= unlockDate;
 }
 
