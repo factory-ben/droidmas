@@ -12,6 +12,10 @@ const InfiniteRightness = dynamic(() => import('@/components/games/InfiniteRight
   loading: () => <div className="h-full flex items-center justify-center"><div className="text-xl">Loading...</div></div>
 });
 
+const WhackAMerge = dynamic(() => import('@/components/games/WhackAMerge'), {
+  loading: () => <div className="h-full flex items-center justify-center"><div className="text-xl">Loading...</div></div>
+});
+
 export default function DayContent({ day }: { day: number }) {
   const config = getDayConfig(day);
   const unlocked = isDayUnlocked(day);
@@ -54,6 +58,11 @@ export default function DayContent({ day }: { day: number }) {
   // Day 2: Infinite Rightness
   if (day === 2) {
     return <InfiniteRightness />;
+  }
+
+  // Day 3: Whack-a-Merge
+  if (day === 3) {
+    return <WhackAMerge />;
   }
 
   // Placeholder for when day is unlocked but game not yet added
