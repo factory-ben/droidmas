@@ -20,6 +20,9 @@ const WhackAMerge = dynamic(() => import('@/components/games/WhackAMerge'), {
 const PromptGame = dynamic(() => import('@/components/games/PromptGame'), {
   loading: () => <div className="h-full flex items-center justify-center"><div className="text-xl">Loading...</div></div>
 });
+const VibeCodingRace = dynamic(() => import('@/components/games/VibeCodingRace'), {
+  loading: () => <div className="h-full flex items-center justify-center"><div className="text-xl">Loading...</div></div>
+});
 export default function DayContent({ day }: { day: number }) {
   const config = getDayConfig(day);
   const unlocked = isDayUnlocked(day);
@@ -73,7 +76,11 @@ export default function DayContent({ day }: { day: number }) {
   if (day === 4) {
     return <PromptGame />;
   }
-  // Placeholder for when day is unlocked but game not yet added
+  // Day 5: Vibe Coding Race
+  if (day === 5) {
+    return <VibeCodingRace />;
+  }
+
   return (
     <div className="h-full flex items-center justify-center">
       <div className="text-center space-y-4">
