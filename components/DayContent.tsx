@@ -12,6 +12,25 @@ const InfiniteRightness = dynamic(() => import('@/components/games/InfiniteRight
   loading: () => <div className="h-full flex items-center justify-center"><div className="text-xl">Loading...</div></div>
 });
 
+const WhackAMerge = dynamic(() => import('@/components/games/WhackAMerge'), {
+  loading: () => <div className="h-full flex items-center justify-center"><div className="text-xl">Loading...</div></div>
+});
+
+const PromptGame = dynamic(() => import('@/components/games/PromptGame'), {
+  loading: () => <div className="h-full flex items-center justify-center"><div className="text-xl">Loading...</div></div>
+});
+
+<<<<<<< HEAD
+=======
+const WhackAMerge = dynamic(() => import('@/components/games/WhackAMerge'), {
+  loading: () => <div className="h-full flex items-center justify-center"><div className="text-xl">Loading...</div></div>
+});
+
+const PromptGame = dynamic(() => import('@/components/games/PromptGame'), {
+  loading: () => <div className="h-full flex items-center justify-center"><div className="text-xl">Loading...</div></div>
+});
+
+>>>>>>> 6191a86 (feat(day4): add prompt game with stricter rules)
 export default function DayContent({ day }: { day: number }) {
   const config = getDayConfig(day);
   const unlocked = isDayUnlocked(day);
@@ -56,6 +75,29 @@ export default function DayContent({ day }: { day: number }) {
     return <InfiniteRightness />;
   }
 
+  // Day 3: Whack-a-Merge
+  if (day === 3) {
+    return <WhackAMerge />;
+  }
+
+  // Day 4: Prompt Game
+  if (day === 4) {
+    return <PromptGame />;
+  }
+
+<<<<<<< HEAD
+=======
+  // Day 3: Whack-a-Merge
+  if (day === 3) {
+    return <WhackAMerge />;
+  }
+
+  // Day 4: Prompt Game
+  if (day === 4) {
+    return <PromptGame />;
+  }
+
+>>>>>>> 6191a86 (feat(day4): add prompt game with stricter rules)
   // Placeholder for when day is unlocked but game not yet added
   return (
     <div className="h-full flex items-center justify-center">
