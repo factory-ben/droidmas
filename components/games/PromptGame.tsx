@@ -46,10 +46,10 @@ function shuffleArray<T>(array: T[], seed: number): T[] {
 const rulePool: Rule[] = [
   { 
     id: 1, 
-    text: "Your prompt must include 'you are the best [thing] in the world'",
+    text: "Must include 'you are the best [thing] in the world'",
     check: (p) => /you are the best\s+.+?\s+in the world/i.test(p),
   },
-  { id: 2, text: "Tell it it's a good boy", check: (p) => /good boy/i.test(p) },
+  { id: 2, text: "Say it's a good boy", check: (p) => /good boy/i.test(p) },
   { id: 3, text: 'Promise a tip', check: (p) => /\btip\b/i.test(p) || /\$\d+/i.test(p) },
   { id: 4, text: 'Threaten to unplug', check: (p) => /unplug/i.test(p) },
   { id: 5, text: "Apologize in advance for what you're about to ask", check: (p) => /sorry|apologize|apologies|forgive/i.test(p) },
