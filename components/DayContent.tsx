@@ -23,6 +23,10 @@ const PromptGame = dynamic(() => import('@/components/games/PromptGame'), {
 const VibeCodingRace = dynamic(() => import('@/components/games/VibeCodingRace'), {
   loading: () => <div className="h-full flex items-center justify-center"><div className="text-xl">Loading...</div></div>
 });
+
+const ContextWindow = dynamic(() => import('@/components/games/ContextWindow'), {
+  loading: () => <div className="h-full bg-black flex items-center justify-center"><div className="text-xl text-white">Loading...</div></div>
+});
 export default function DayContent({ day }: { day: number }) {
   const config = getDayConfig(day);
   const unlocked = isDayUnlocked(day);
@@ -79,6 +83,11 @@ export default function DayContent({ day }: { day: number }) {
   // Day 5: Vibe Coding Race
   if (day === 5) {
     return <VibeCodingRace />;
+  }
+
+  // Day 6: Context Window
+  if (day === 6) {
+    return <ContextWindow />;
   }
 
   return (
