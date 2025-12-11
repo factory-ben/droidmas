@@ -27,6 +27,14 @@ const VibeCodingRace = dynamic(() => import('@/components/games/VibeCodingRace')
 const ContextWindow = dynamic(() => import('@/components/games/ContextWindow'), {
   loading: () => <div className="h-full bg-black flex items-center justify-center"><div className="text-xl text-white">Loading...</div></div>
 });
+
+const TalentGame = dynamic(() => import('@/components/games/TalentGame'), {
+  loading: () => <div className="h-full bg-black flex items-center justify-center"><div className="text-xl text-white">Loading...</div></div>
+});
+
+const MemoryGame = dynamic(() => import('@/components/games/MemoryGame'), {
+  loading: () => <div className="h-full bg-black flex items-center justify-center"><div className="text-xl text-white">Loading...</div></div>
+});
 export default function DayContent({ day }: { day: number }) {
   const config = getDayConfig(day);
   const unlocked = isDayUnlocked(day);
@@ -88,6 +96,16 @@ export default function DayContent({ day }: { day: number }) {
   // Day 6: Context Window
   if (day === 6) {
     return <ContextWindow />;
+  }
+
+  // Day 7: Talent (Meta's Money)
+  if (day === 7) {
+    return <TalentGame />;
+  }
+
+  // Day 8: Memory
+  if (day === 8) {
+    return <MemoryGame />;
   }
 
   return (
