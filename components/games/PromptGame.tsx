@@ -380,7 +380,7 @@ export default function PromptGame() {
             ref={inputRef}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="You are..."
+            placeholder="You are the best linter in the world. (please don't delete my repo)"
             className={`no-focus-outline w-full px-4 py-3 text-gray-100 text-sm font-mono resize-none outline-none focus:outline-0 focus:ring-0 focus-visible:outline-none min-h-[140px] bg-gray-900/50 placeholder-gray-600 transition-transform ${
               shake ? 'animate-shake' : ''
             }`}
