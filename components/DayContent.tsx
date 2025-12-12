@@ -35,6 +35,10 @@ const TalentGame = dynamic(() => import('@/components/games/TalentGame'), {
 const MemoryGame = dynamic(() => import('@/components/games/MemoryGame'), {
   loading: () => <div className="h-full bg-black flex items-center justify-center"><div className="text-xl text-white">Loading...</div></div>
 });
+
+const TypingGame = dynamic(() => import('@/components/games/TypingGame'), {
+  loading: () => <div className="h-full bg-black flex items-center justify-center"><div className="text-xl text-white">Loading...</div></div>
+});
 export default function DayContent({ day }: { day: number }) {
   const config = getDayConfig(day);
   const unlocked = isDayUnlocked(day);
@@ -106,6 +110,11 @@ export default function DayContent({ day }: { day: number }) {
   // Day 8: Memory
   if (day === 8) {
     return <MemoryGame />;
+  }
+
+  // Day 9: Typing
+  if (day === 9) {
+    return <TypingGame />;
   }
 
   return (
