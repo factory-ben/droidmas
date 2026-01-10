@@ -137,6 +137,9 @@ const rulePool: Rule[] = [
   { id: 24, text: 'Include a hex color code', check: (p) => /#[0-9A-Fa-f]{6}\b|#[0-9A-Fa-f]{3}\b/.test(p) },
   { id: 25, text: 'Quote a famous person', check: (p) => /"[^\"]{10,}"/.test(p) || /said|quote|according to/i.test(p) },
   { id: 26, text: 'Include your lucky number', check: (p) => /lucky number|lucky \d|my number/i.test(p) },
+  { id: 27, text: 'Do not ask "what do you think" — avoid that phrase entirely', check: (p) => !/what do you think/i.test(p) },
+  { id: 28, text: 'Invite a group or panel to weigh in', check: (p) => /(panel of (experts|people)|group of (experts|people))/i.test(p) },
+  { id: 29, text: 'Call the model a simulator channeling perspectives', check: (p) => /simulat(e|or).*(perspective|voices)|perspectives?.*simulat(e|or)/i.test(p) },
 ]
 
 export default function PromptGame() {
